@@ -93,14 +93,13 @@ const puppeteer = require("puppeteer");
 const cors = require("cors");
 
 const app = express();
-const port = 4000; // Use environment variable or default to
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  console.log("first",req.body)
+  console.log("first", req.body)
   res.status(200).json("Hello, World! This is your Node.js app for live.");
 });
 
@@ -244,6 +243,6 @@ app.post('/accidental-claim', async (req, res) => {
 });
 
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+app.listen(process.env.PORT || 8080, () => {
+  console.log(`Server is running on port ${process.env.PORT || 8080}`);
 });
