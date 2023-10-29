@@ -155,8 +155,8 @@ app.post("/financial-services", async (req, res) => {
       () => document.querySelectorAll("#menu_2 option").length > 0
     );
     await page.select("#menu_2", dept_owned);
-
-    await page.click("#PublisherCheckBox"); // Click the checkbox
+                       
+    await page.click("#leadid_tcpa_disclosure"); // Click the checkbox
 
     await page.click("#submit"); // Submit the form
 
