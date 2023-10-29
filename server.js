@@ -100,7 +100,7 @@ app.use(express.json());
 
 app.get("/", (req, res) => {
   console.log("first", req.body)
-  res.status(200).json("Pupeeter");
+  res.status(200).json("Pupeeter 1");
 });
 
 app.post("/financial-services/token", async (req, res) => {
