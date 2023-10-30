@@ -185,13 +185,12 @@ app.post('/accidental-claim', async (req, res) => {
       dob,
       accident_month,
       email_address,
-      PublisherCheckBox
     } = req.body;
     console.log(req.body)
     const browser = await puppeteer.launch({ headless: 'new' }); // Run Puppeteer in headless mode
     const page = await browser.newPage();
 
-    const pageUrl = 'http://127.0.0.1:5501/accidental.html'; // Replace with your form URL
+    const pageUrl = 'https://accidentclaimspros.com/contact.html'; // Replace with your form URL
 
     await page.goto(pageUrl, { waitUntil: 'domcontentloaded', timeout: 60000 });
     await new Promise((resolve) => setTimeout(resolve, 5 * 1000));
@@ -226,13 +225,13 @@ app.post('/accidental-claim', async (req, res) => {
     await page.waitForSelector('#floatingEmailAddress');
     await page.type('#floatingEmailAddress', email_address);
 
-    if (PublisherCheckBox === 'on') {
-      await page.click('#PublisherCheckBox');
-    }
+  
+      await page.click('#leadid_tcpa_disclosure');
+    
 
     await page.click('#submit');
 
-    await new Promise((resolve) => setTimeout(resolve, 5 * 30000));
+    await new Promise((resolve) => setTimeout(resolve, 40000));
     console.log('Form submitted successfully.');
     await browser.close();
     res.status(200).send('Form submitted successfully.');
