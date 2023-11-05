@@ -99,7 +99,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  console.log("first", req.body)
+  console.log("first", req.body);
   res.status(200).json("Pupeeter 1");
 });
 
@@ -155,7 +155,7 @@ app.post("/financial-services", async (req, res) => {
       () => document.querySelectorAll("#menu_2 option").length > 0
     );
     await page.select("#menu_2", dept_owned);
-                       
+
     await page.click("#leadid_tcpa_disclosure"); // Click the checkbox
 
     await page.click("#submit"); // Submit the form
@@ -171,7 +171,7 @@ app.post("/financial-services", async (req, res) => {
   }
 });
 
-app.post('/accidental-claim', async (req, res) => {
+app.post("/accidental-claim", async (req, res) => {
   try {
     const {
       first_name,
@@ -186,61 +186,155 @@ app.post('/accidental-claim', async (req, res) => {
       accident_month,
       email_address,
     } = req.body;
-    console.log(req.body)
-    const browser = await puppeteer.launch({ headless: 'new' }); // Run Puppeteer in headless mode
+    console.log(req.body);
+    const browser = await puppeteer.launch({ headless: "new" }); // Run Puppeteer in headless mode
     const page = await browser.newPage();
 
-    const pageUrl = 'https://accidentclaimspros.com/contact.html'; // Replace with your form URL
+    const pageUrl = "https://accidentclaimspros.com/contact.html"; // Replace with your form URL
 
-    await page.goto(pageUrl, { waitUntil: 'domcontentloaded', timeout: 60000 });
+    await page.goto(pageUrl, { waitUntil: "domcontentloaded", timeout: 60000 });
     await new Promise((resolve) => setTimeout(resolve, 5 * 1000));
-    await page.waitForSelector('#floatingFirstName');
-    await page.type('#floatingFirstName', first_name);
+    await page.waitForSelector("#floatingFirstName");
+    await page.type("#floatingFirstName", first_name);
 
-    await page.waitForSelector('#floatingLastName');
-    await page.type('#floatingLastName', last_name);
+    await page.waitForSelector("#floatingLastName");
+    await page.type("#floatingLastName", last_name);
 
-    await page.waitForSelector('#floatingCity');
-    await page.type('#floatingCity', city);
+    await page.waitForSelector("#floatingCity");
+    await page.type("#floatingCity", city);
 
-    await page.select('#floatingSelectGrid', state);
+    await page.select("#floatingSelectGrid", state);
 
-    await page.waitForSelector('#floatingZipCode');
-    await page.type('#floatingZipCode', zip_code);
+    await page.waitForSelector("#floatingZipCode");
+    await page.type("#floatingZipCode", zip_code);
 
-    await page.waitForSelector('#floatingPhoneNumber');
-    await page.type('#floatingPhoneNumber', phone);
+    await page.waitForSelector("#floatingPhoneNumber");
+    await page.type("#floatingPhoneNumber", phone);
 
-    await page.select('#floatingSelectGridd', accident_type);
+    await page.select("#floatingSelectGridd", accident_type);
 
-    await page.waitForSelector('#age_of_accident');
-    await page.type('#age_of_accident', age_of_accident);
+    await page.waitForSelector("#age_of_accident");
+    await page.type("#age_of_accident", age_of_accident);
 
-    await page.waitForSelector('#floatingdob');
-    await page.type('#floatingdob', dob);
+    await page.waitForSelector("#floatingdob");
+    await page.type("#floatingdob", dob);
 
-    await page.waitForSelector('#floatingAcMo');
-    await page.type('#floatingAcMo', accident_month);
+    await page.waitForSelector("#floatingAcMo");
+    await page.type("#floatingAcMo", accident_month);
 
-    await page.waitForSelector('#floatingEmailAddress');
-    await page.type('#floatingEmailAddress', email_address);
+    await page.waitForSelector("#floatingEmailAddress");
+    await page.type("#floatingEmailAddress", email_address);
 
-  
-      await page.click('#leadid_tcpa_disclosure');
-    
+    await page.click("#leadid_tcpa_disclosure");
 
-    await page.click('#submit');
+    await page.click("#submit");
 
     await new Promise((resolve) => setTimeout(resolve, 40000));
-    console.log('Form submitted successfully.');
+    console.log("Form submitted successfully.");
     await browser.close();
-    res.status(200).send('Form submitted successfully.');
+    res.status(200).send("Form submitted successfully.");
   } catch (error) {
-    console.error('Error:', error);
-    res.status(500).send('Error occurred while submitting the form.');
+    console.error("Error:", error);
+    res.status(500).send("Error occurred while submitting the form.");
   }
 });
 
+app.post("/medicare", async (req, res) => {
+  try {
+    const {
+      first_name,
+      last_name,
+      email,
+      zip_code,
+      phone,
+      // ...other form fields
+    } = req.body;
+    console.log("firstsd", req.body);
+    const browser = await puppeteer.launch({ headless: "new" }); // Run Puppeteer in headless mode
+    const page = await browser.newPage();
+
+    const formUrl = "https://elitemedicareassist.com/index.html"; // Replace with your form URL
+    // const formUrl = "http://127.0.0.1:5501/medicare.html"; // Replace with your form URL
+
+    await page.goto(formUrl, { waitUntil: "domcontentloaded", timeout: 60000 });
+    await new Promise((resolve) => setTimeout(resolve, 5 * 1000));
+    // Wait for all selectors to be present
+    // Fill form fields
+    await page.waitForSelector("#first_name"),
+      await page.type("#first_name", first_name);
+
+    await page.waitForSelector("#last_name"),
+      await page.type("#last_name", last_name);
+
+    await page.waitForSelector("#email"), await page.type("#email", email);
+
+    await page.waitForSelector("#zip_code"),
+      await page.type("#zip_code", zip_code);
+
+    await page.waitForSelector("#phone"), await page.type("#phone", phone);
+
+    // Check the disclosure checkbox
+    await page.waitForSelector("#leadid_tcpa_disclosure"),
+      await page.click("#leadid_tcpa_disclosure");
+
+    // Submit the form
+    await page.click('#submit');
+
+    await new Promise((resolve) => setTimeout(resolve, 40000));
+    console.log("Form submitted successfully.");
+    await browser.close();
+    res.status(200).send("Form submitted successfully.");
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send("Error occurred while submitting the form.", error);
+  }
+});
+
+app.post("/being-insured", async (req, res) => {
+  try {
+    const { Name, Email, Number, Zip_code, Insurance_type } = req.body;
+    console.log(req.body);
+    const browser = await puppeteer.launch({
+      headless: "new",
+      ignoreHTTPSErrors: true,
+    }); // Run Puppeteer in headless mode
+
+    const page = await browser.newPage();
+    const pageUrl = "https://being-insured.com/contact.html"; // Replace with your form URL
+
+    await page.goto(pageUrl, { waitUntil: "domcontentloaded", timeout: 60000 });
+
+    await new Promise((resolve) => setTimeout(resolve, 5 * 1000));
+
+    await page.waitForSelector("#Name");
+    await page.type("#Name", Name);
+
+    await page.waitForSelector("#Email");
+    await page.type("#Email", Email);
+
+    await page.waitForSelector("#Number");
+    await page.type("#Number", Number);
+
+    await page.waitForSelector("#Zip_code");
+    await page.type("#Zip_code", Zip_code);
+
+    await page.waitForSelector("#Insurance_type");
+    await page.select("#Insurance_type", Insurance_type);
+
+    await page.click("#leadid_tcpa_disclosure");
+    await page.click("#submit");
+
+    await new Promise((resolve) => setTimeout(resolve, 40000));
+
+    console.log("Form submitted successfully.");
+    await browser.close();
+    res.status(200).send("Form submitted successfully.");
+  } catch (error) {
+    console.error("Error:", error);
+    throw error(error);
+    res.status(500).send("Error occurred while submitting the form.", error);
+  }
+});
 
 app.listen(process.env.PORT || 8080, () => {
   console.log(`Server is running on port ${process.env.PORT || 8080}`);
