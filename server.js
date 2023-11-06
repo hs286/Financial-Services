@@ -100,7 +100,7 @@ app.use(express.json());
 
 app.get("/", (req, res) => {
   console.log("first", req.body);
-  res.status(200).json("Pupeeter 1");
+  res.status(200).json("Pupeeter 2");
 });
 
 app.post("/financial-services/token", async (req, res) => {
@@ -279,7 +279,7 @@ app.post("/medicare", async (req, res) => {
 
       await page.waitForSelector('#submit'); // Wait for the submit button to be visible
       await page.click('#submit');
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 8000));
 
     // Submit the form
    
@@ -328,7 +328,7 @@ app.post("/being-insured", async (req, res) => {
     await page.click("#leadid_tcpa_disclosure");
     await page.click("#submit");
 
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 8000));
 
     console.log("Form submitted successfully.");
     await browser.close();
