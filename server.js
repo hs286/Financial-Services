@@ -247,17 +247,16 @@ app.post("/medicare", async (req, res) => {
       email,
       zip_code,
       phone,
-      // ...other form fields
     } = req.body;
     console.log("firstsd", req.body);
     const browser = await puppeteer.launch({ headless: "new" }); // Run Puppeteer in headless mode
     const page = await browser.newPage();
 
-    const formUrl = "https://elitemedicareassist.com/index.html"; // Replace with your form URL
-    // const formUrl = "http://127.0.0.1:5501/medicare.html"; // Replace with your form URL
+    const formUrl = "https://elitemedicareassist.com/con.html"; // Replace with your form URL
+    // const formUrl = "https://elitefinancialservices.net/a.html"; // Replace with your form URL
 
     await page.goto(formUrl, { waitUntil: "domcontentloaded", timeout: 60000 });
-    await new Promise((resolve) => setTimeout(resolve, 5 * 1000));
+    await new Promise((resolve) => setTimeout(resolve, 15 * 1000));
     // Wait for all selectors to be present
     // Fill form fields
     await page.waitForSelector("#first_name"),
@@ -276,17 +275,22 @@ app.post("/medicare", async (req, res) => {
     // Check the disclosure checkbox
     await page.waitForSelector("#leadid_tcpa_disclosure"),
       await page.click("#leadid_tcpa_disclosure");
+      // await new Promise((resolve) => setTimeout(resolve, 15000));
+
+      await page.waitForSelector('#submit'); // Wait for the submit button to be visible
+      await page.click('#submit');
+      await new Promise((resolve) => setTimeout(resolve, 2000));
 
     // Submit the form
-    await page.click('#submit');
+   
 
-    await new Promise((resolve) => setTimeout(resolve, 40000));
+    
     console.log("Form submitted successfully.");
     await browser.close();
     res.status(200).send("Form submitted successfully.");
   } catch (error) {
     console.error("Error:", error);
-    res.status(500).send("Error occurred while submitting the form.", error);
+    res.status(500).send("Error occurred while submitting the form.");
   }
 });
 
@@ -300,11 +304,11 @@ app.post("/being-insured", async (req, res) => {
     }); // Run Puppeteer in headless mode
 
     const page = await browser.newPage();
-    const pageUrl = "https://being-insured.com/contact.html"; // Replace with your form URL
+    const pageUrl = "https://being-insured.com/con.html"; // Replace with your form URL
 
     await page.goto(pageUrl, { waitUntil: "domcontentloaded", timeout: 60000 });
 
-    await new Promise((resolve) => setTimeout(resolve, 5 * 1000));
+    await new Promise((resolve) => setTimeout(resolve, 16 * 1000));
 
     await page.waitForSelector("#Name");
     await page.type("#Name", Name);
@@ -324,7 +328,7 @@ app.post("/being-insured", async (req, res) => {
     await page.click("#leadid_tcpa_disclosure");
     await page.click("#submit");
 
-    await new Promise((resolve) => setTimeout(resolve, 40000));
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
     console.log("Form submitted successfully.");
     await browser.close();
