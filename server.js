@@ -167,7 +167,7 @@ app.post("/financial-services", async (req, res) => {
     res.status(200).send("Form submitted successfully.");
   } catch (error) {
     console.error("Error:", error);
-    res.status(500).send("Error occurred while submitting the form.");
+    res.status(500).send("Error occurred while submitting the form.",error.message);
   }
 });
 
