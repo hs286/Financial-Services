@@ -239,7 +239,7 @@ app.post("/being-insured", async (req, res) => {
 
     await page.goto(pageUrl, { waitUntil: "domcontentloaded", timeout: 60000 });
 
-    await new Promise((resolve) => setTimeout(resolve, 16 * 1000));
+    await new Promise((resolve) => setTimeout(resolve, 4 * 1000));
 
     await page.waitForSelector("#Name");
     await page.type("#Name", Name);
@@ -259,8 +259,9 @@ app.post("/being-insured", async (req, res) => {
     await page.click("#leadid_tcpa_disclosure");
     await page.click("#submit");
 
-    await new Promise((resolve) => setTimeout(resolve, 8000));
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
+    
     console.log("Form submitted successfully.");
     await browser.close();
     res.status(200).send("Form submitted successfully.");
